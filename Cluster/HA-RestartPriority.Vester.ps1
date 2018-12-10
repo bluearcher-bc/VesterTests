@@ -2,14 +2,14 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = $Title = 'HA Restartpriority'
+$Title = $Title = 'HA Default VM RestartPriority'
 
 # Test description: How New-VesterConfig explains this value to the user
-$Description = 'Specifies the cluster HA restart priority on the cluster'
-# The valid values are: Disabled, Low, Medium, and High
+$Description = 'Specifies the cluster HA Default VM RestartPriority on the cluster'
+# The valid values are: Disabled, Lowest, Low, Medium, High and Highest
 
 # The config entry stating the desired values
-$Desired = $cfg.cluster.harestartpriority
+$Desired = $cfg.cluster.havmrestartpriority
 
 # The test value's data type, to help with conversion: bool/string/int
 $Type = 'string'
