@@ -26,7 +26,7 @@ $Type = 'string[]'
             $folder = ($array | Where-Object { $_.Moref -eq $parent}).Name
             $parent = ($array | Where-Object { $_.Moref -eq $parent}).Parent
         }
-        $myout+","
+        $myout
     }
 }
 
@@ -34,5 +34,4 @@ $Type = 'string[]'
 # Use $Object to help filter, and $Desired to set the correct value
 [ScriptBlock]$Fix = {
     Write-Host "VM folders has changed"
-    #To Do compare objects $Actual and $Desired
 }
