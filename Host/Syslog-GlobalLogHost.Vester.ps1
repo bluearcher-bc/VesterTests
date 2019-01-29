@@ -1,27 +1,26 @@
-# Test file for the Vester module - https://github.com/WahlNetwork/Vester
+﻿# Test file for the Vester module - https://github.com/WahlNetwork/Vester
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
-# ESXi host Disk.MaxLUN advanced setting.
-# Some customer environments relied on lower legacy default value to avoid PDL errors with certain vendor SAN management LUNs exposed at a higher number.
-# See https://kb.vmware.com/kb/1998
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'Disk MaxLUN'
+$Title = 'Syslog.global.logHost'
 
 # Test description: How New-VesterConfig explains this value to the user
-$Description = 'Highest LUN ID available to ESXi host.  Above this number will be ignored.'
-# Default value = 1024
+$Description = 'The remote host to output logs to'
+# The remote host to output logs to. Reset to default on null. 
+# Multiple hosts are supprted an dmust be separated with comma (,).
+# Example: udp://hostname:514, hostname2, ssl://hostname3:1514
 
 # The config entry stating the desired values
-$Desired = $cfg.host.DiskMaxLun
+$Desired = $cfg.host.SyslogGlobalLogHost
 
 # The test value's data type, to help with conversion: bool/string/int
-$Type = 'int'
+$Type = 'string'
 
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
 [ScriptBlock]$Actual = {
     (Get-AdvancedSetting -Entity $Object | Where-Object -FilterScript {
-        $_.Name -eq 'Disk.MaxLUN'
+        $_.Name -eq 'Syslog.global.logHost'
     }).Value
 }
 
@@ -29,6 +28,6 @@ $Type = 'int'
 # Use $Object to help filter, and $Desired to set the correct value
 [ScriptBlock]$Fix = {
     Get-AdvancedSetting -Entity $Object | Where-Object -FilterScript {
-            $_.Name -eq 'Disk.MaxLUN'
+            $_.Name -eq 'Syslog.global.logHost'
         } | Set-AdvancedSetting -Value $Desired -Confirm:$false -ErrorAction Stop
 }

@@ -1,18 +1,15 @@
-# Test file for the Vester module - https://github.com/WahlNetwork/Vester
+﻿# Test file for the Vester module - https://github.com/WahlNetwork/Vester
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
-# ESXi host Disk.MaxLUN advanced setting.
-# Some customer environments relied on lower legacy default value to avoid PDL errors with certain vendor SAN management LUNs exposed at a higher number.
-# See https://kb.vmware.com/kb/1998
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'Disk MaxLUN'
+$Title = 'UserVars.SuppressShellWarning'
 
 # Test description: How New-VesterConfig explains this value to the user
-$Description = 'Highest LUN ID available to ESXi host.  Above this number will be ignored.'
-# Default value = 1024
+$Description = 'Do not show warning for enabled local and remote shell access'
+# Default value = 0. Value =1 => do not show warning
 
 # The config entry stating the desired values
-$Desired = $cfg.host.DiskMaxLun
+$Desired = $cfg.host.UserVarsSuppressShellWarning
 
 # The test value's data type, to help with conversion: bool/string/int
 $Type = 'int'
@@ -21,7 +18,7 @@ $Type = 'int'
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
 [ScriptBlock]$Actual = {
     (Get-AdvancedSetting -Entity $Object | Where-Object -FilterScript {
-        $_.Name -eq 'Disk.MaxLUN'
+        $_.Name -eq 'UserVars.SuppressShellWarning'
     }).Value
 }
 
@@ -29,6 +26,6 @@ $Type = 'int'
 # Use $Object to help filter, and $Desired to set the correct value
 [ScriptBlock]$Fix = {
     Get-AdvancedSetting -Entity $Object | Where-Object -FilterScript {
-            $_.Name -eq 'Disk.MaxLUN'
+            $_.Name -eq 'UserVars.SuppressShellWarning'
         } | Set-AdvancedSetting -Value $Desired -Confirm:$false -ErrorAction Stop
 }
