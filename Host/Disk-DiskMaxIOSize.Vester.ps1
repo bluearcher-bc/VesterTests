@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'Disk.DiskMaxIOSize'
+$Title = 'Disk DiskMaxIOSize'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Max Disk READ/WRITE I/O size before splitting (in KB)'

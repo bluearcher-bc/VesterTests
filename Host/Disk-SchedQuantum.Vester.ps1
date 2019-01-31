@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'Disk.SchedQuantum'
+$Title = 'Disk SchedQuantum'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Number of consecutive requests from one world'

@@ -17,11 +17,11 @@ $Type = 'bool'
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
 [ScriptBlock]$Actual = {
-    $Object.DRSEnabled
+    $Object.DrsEnabled
 }
 
 # The command(s) to match the environment to the config
 # Use $Object to help filter, and $Desired to set the correct value
 [ScriptBlock]$Fix = {
-    Set-Cluster -Cluster $Object -DRSEnabled:$Desired -Confirm:$false -ErrorAction Stop
+    Set-Cluster -Cluster $Object -DrsEnabled:$Desired -Confirm:$false -ErrorAction Stop
 }

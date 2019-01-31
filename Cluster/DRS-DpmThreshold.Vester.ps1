@@ -8,8 +8,8 @@ $Title = 'DRS Power Management Threshold'
 $Description = 'Set Threshold for Power Management DPM'
 # The valid values are: 1 - 5
 # 1 = Agressive, 5 = Conservative (differs from values in vSphere Client!)
-# Imporatent, this setting is only relevant when DPM is enabled, see DRS-DpmEnabled,
-# otherwise stick to the default value.
+# Important, this setting is only relevant when DPM is enabled, see DRS-DpmEnabled,
+# otherwise keep the default value of 3.
 
 # The config entry stating the desired values
 $Desired = $cfg.cluster.drsDpmThreshold
