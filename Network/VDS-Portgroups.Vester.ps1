@@ -15,7 +15,7 @@ $Type = 'string[]'
 
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
-$i = 0
+# $i = 0
 [ScriptBlock]$Actual = {
     $i = 0    # First element is 0
     ($Object | Get-VDPortgroup) | ForEach-Object {
