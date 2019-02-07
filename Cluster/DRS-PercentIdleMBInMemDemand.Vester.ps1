@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'DRS Memory Metric for Load Balancing'
+$Title = 'DRS Memory Metric for Load Balancing - PercentIdleMBInMemDemand'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Load balance based on consumed memory of VMs or active memory'
