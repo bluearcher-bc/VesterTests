@@ -24,7 +24,7 @@ $Type = 'string[]'
         # [2] = VMotionEnabled
         # [3] = FaultToleranceLoggingEnabled
         # [4] = ManagementTrafficEnabled
-        # [5] = IPv6Enabled
+        # [5] = IPv6Enabled # Note: If IPV6 is Disabled, it returns a blanc insteadd of False! 
         # [6] = Mtu
         # [7] = VsanTrafficEnabled
         # [8] = DhcpEnabled
@@ -46,8 +46,16 @@ $Type = 'string[]'
     Compare-Object $Desired (& $Actual) |
     Where-Object { $_.SideIndicator -eq "<=" } | 
     ForEach-Object {
+        $Params = @{
+            'VMotionEnabled'                = [System.Convert]::ToBoolean($_.InputObject.split(";")[2])
+            'FaultToleranceLoggingEnabled'  = [System.Convert]::ToBoolean($_.InputObject.split(";")[3])
+            'ManagementTrafficEnabled'      = [System.Convert]::ToBoolean($_.InputObject.split(";")[4])
+            'Mtu'                           = $_.InputObject.split(";")[6]
+            'VsanTrafficEnabled'            = [System.Convert]::ToBoolean($_.InputObject.split(";")[7])
+            'Dhcp'                          = [System.Convert]::ToBoolean($_.InputObject.split(";")[8])
+        }
         Get-VMHostNetworkAdapter -Name ($_.InputObject.split(";")[0]) |
-        Set-VMHostNetworkAdapter -Mtu ($_.InputObject.split(";")[6])    -Confirm:$false -ErrorAction Stop
-    Write-Host "Work in progress"
+        Set-VMHostNetworkAdapter @Params -Confirm:$false -ErrorAction Stop
     }
 }
+# Need to convert String value to booean to set most of the parameters: [System.Convert]::ToBoolean($SomeVar) 
