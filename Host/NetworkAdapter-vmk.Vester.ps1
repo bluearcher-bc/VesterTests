@@ -58,4 +58,4 @@ $Type = 'string[]'
         Set-VMHostNetworkAdapter @Params -Confirm:$false -ErrorAction Stop
     }
 }
-# Need to convert String value to booean to set most of the parameters: [System.Convert]::ToBoolean($SomeVar) 
+# Need to convert String value to boolean to set most of the parameters: [System.Convert]::ToBoolean($SomeVar) 
