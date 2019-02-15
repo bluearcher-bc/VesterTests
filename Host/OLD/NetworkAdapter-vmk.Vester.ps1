@@ -15,23 +15,27 @@ $Type = 'string[]'
 
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
-# $i = 0
 [ScriptBlock]$Actual = {
-    $i = 0    # First element $i 0
+    $var = "Name;PortGroupName;VMotionEnabled;FaultToleranceLoggingEnabled;ManagementTrafficEnabled;IPv6Enabled;Mtu;VsanTrafficEnabled;DhcpEnabled"
+    $Var # Returns value
     $Object | Get-VMHostNetworkAdapter | Where-Object { $_.Name -like "vmk*" } | ForEach-Object {
-        # [0] = Index, variable $i
-        # [1] = Name
-        # [2] = PortGroupName
-        # [3] = VMotionEnabled
-        # [4] = FaultToleranceLoggingEnabled
-        # [5] = ManagementTrafficEnabled
-        # [6] = IPv6Enabled
-        # [7] = Mtu
-        # [8] = VsanTrafficEnabled
-        # [9] = DhcpEnabled
-        # $var = one portgroup with all properties 
-        $var = $i.ToString()+";"+$_.Name+";"+$_.PortGroupName+";"+$_.VMotionEnabled+";"+$_.FaultToleranceLoggingEnabled+";"+$_.ManagementTrafficEnabled+";"+$_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled
-        $i ++
+        # [0] = Name
+        # [1] = PortGroupName
+        # [2] = VMotionEnabled
+        # [3] = FaultToleranceLoggingEnabled
+        # [4] = ManagementTrafficEnabled
+        # [5] = IPv6Enabled # Note: If IPV6 is Disabled, it returns a blanc insteadd of False! 
+        # [6] = Mtu
+        # [7] = VsanTrafficEnabled
+        # [8] = DhcpEnabled
+        # Next line, cutoff PortGroupname for VXLAN portgroups (different per ESXi host)
+        $PortGroupName = $_.PortGroupName
+        if ($PortGroupName -like "vxw-vmknicPg-dvs*") { 
+            $PortGroupName = $PortGroupName.Substring(0,16) 
+        }
+        $Var = $_.Name+";"+$PortGroupName+";"+$_.VMotionEnabled+";"+
+        $_.FaultToleranceLoggingEnabled+";"+$_.ManagementTrafficEnabled+";"+
+        $_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled
         $Var    # Returns value
     }
 }
@@ -39,14 +43,19 @@ $Type = 'string[]'
 # The command(s) to match the environment to the config
 # Use $Object to help filter, and $Desired to set the correct value
 [ScriptBlock]$Fix = {
-#    $i = 0
-#    ($Object | Get-VDPortgroup) | ForEach-Object {
-#        $var = $i.ToString()+";"+$_.Name+";"+$_.VlanConfiguration
-#        if ($var -ne $Desired[$i]){
-#            Set-VDVlanConfiguration -VDPortgroup $Desired[$i].split(";")[1] -VlanId $Desired[$i].split(";")[2].Substring(5)
-#            #Write-Host "Change row: "$i
-#        }
-#        $i ++
-#    }
-     Write-Host "Work in progress"
+    Compare-Object $Desired (& $Actual) |
+    Where-Object { $_.SideIndicator -eq "<=" } | 
+    ForEach-Object {
+        $Params = @{
+            'VMotionEnabled'                = [System.Convert]::ToBoolean($_.InputObject.split(";")[2])
+            'FaultToleranceLoggingEnabled'  = [System.Convert]::ToBoolean($_.InputObject.split(";")[3])
+            'ManagementTrafficEnabled'      = [System.Convert]::ToBoolean($_.InputObject.split(";")[4])
+            'Mtu'                           = $_.InputObject.split(";")[6]
+            'VsanTrafficEnabled'            = [System.Convert]::ToBoolean($_.InputObject.split(";")[7])
+            'Dhcp'                          = [System.Convert]::ToBoolean($_.InputObject.split(";")[8])
+        }
+        Get-VMHostNetworkAdapter -Name ($_.InputObject.split(";")[0]) |
+        Set-VMHostNetworkAdapter @Params -Confirm:$false -ErrorAction Stop
+    }
 }
+# Need to convert String value to boolean to set most of the parameters: [System.Convert]::ToBoolean($SomeVar) 

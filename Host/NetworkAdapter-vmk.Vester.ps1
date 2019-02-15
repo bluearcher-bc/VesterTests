@@ -16,15 +16,14 @@ $Type = 'string[]'
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
 [ScriptBlock]$Actual = {
-    $var = "Name;PortGroupName;VMotionEnabled;FaultToleranceLoggingEnabled;ManagementTrafficEnabled;IPv6Enabled;Mtu;VsanTrafficEnabled;DhcpEnabled"
-    $Var # Returns value
+    ("Name;PortGroupName;VMotionEnabled;FaultToleranceLoggingEnabled;ManagementTrafficEnabled;IPv6Enabled;Mtu;VsanTrafficEnabled;DhcpEnabled")
     $Object | Get-VMHostNetworkAdapter | Where-Object { $_.Name -like "vmk*" } | ForEach-Object {
         # [0] = Name
         # [1] = PortGroupName
         # [2] = VMotionEnabled
         # [3] = FaultToleranceLoggingEnabled
         # [4] = ManagementTrafficEnabled
-        # [5] = IPv6Enabled
+        # [5] = IPv6Enabled # Note: If IPV6 is Disabled, it returns a blanc insteadd of False! 
         # [6] = Mtu
         # [7] = VsanTrafficEnabled
         # [8] = DhcpEnabled
@@ -33,10 +32,9 @@ $Type = 'string[]'
         if ($PortGroupName -like "vxw-vmknicPg-dvs*") { 
             $PortGroupName = $PortGroupName.Substring(0,16) 
         }
-        $Var = $_.Name+";"+$PortGroupName+";"+$_.VMotionEnabled+";"+
+        ($_.Name+";"+$PortGroupName+";"+$_.VMotionEnabled+";"+
         $_.FaultToleranceLoggingEnabled+";"+$_.ManagementTrafficEnabled+";"+
-        $_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled
-        $Var    # Returns value
+        $_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled)
     }
 }
 
@@ -46,8 +44,16 @@ $Type = 'string[]'
     Compare-Object $Desired (& $Actual) |
     Where-Object { $_.SideIndicator -eq "<=" } | 
     ForEach-Object {
+        $Params = @{
+            'VMotionEnabled'                = [System.Convert]::ToBoolean($_.InputObject.split(";")[2])
+            'FaultToleranceLoggingEnabled'  = [System.Convert]::ToBoolean($_.InputObject.split(";")[3])
+            'ManagementTrafficEnabled'      = [System.Convert]::ToBoolean($_.InputObject.split(";")[4])
+            'Mtu'                           = $_.InputObject.split(";")[6]
+            'VsanTrafficEnabled'            = [System.Convert]::ToBoolean($_.InputObject.split(";")[7])
+            'Dhcp'                          = [System.Convert]::ToBoolean($_.InputObject.split(";")[8])
+        }
         Get-VMHostNetworkAdapter -Name ($_.InputObject.split(";")[0]) |
-        Set-VMHostNetworkAdapter -Mtu ($_.InputObject.split(";")[6])    -Confirm:$false -ErrorAction Stop
-    Write-Host "Work in progress"
+        Set-VMHostNetworkAdapter @Params -Confirm:$false -ErrorAction Stop
     }
 }
+# Need to convert String value to boolean to set most of the parameters: [System.Convert]::ToBoolean($SomeVar) 

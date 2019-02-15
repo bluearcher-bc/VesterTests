@@ -33,6 +33,6 @@ $Type = 'int'
         Get-AdvancedSetting -Entity $object -Name IgnoreAffinityRulesForMaintenance | Remove-AdvancedSetting -Confirm:$false -ErrorAction Stop
     } 
     else {
-        $Object | New-AdvancedSetting -Name IgnoreAffinityRulesForMaintenance -Value $Desired -Type ClusterDRS -Force -Confirm:$false -ErrorAction Stop
+        $Object | New-AdvancedSetting -Name IgnoreAffinityRulesForMaintenance -Value $Desired -Force -Confirm:$false -ErrorAction Stop
     }
 }

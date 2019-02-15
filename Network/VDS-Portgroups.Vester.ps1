@@ -20,8 +20,7 @@ $Type = 'string[]'
     ($Object | Get-VDPortgroup | Where-Object { $_.IsUplink -eq $False } ) | ForEach-Object {
         # [0] = Name of portgroup
         # [1] = VlanConfiguration
-        $var = $_.Name+";"+$_.VlanConfiguration
-        $Var    # Returns value
+        ($_.Name+";"+$_.VlanConfiguration)
     }
 }
 
