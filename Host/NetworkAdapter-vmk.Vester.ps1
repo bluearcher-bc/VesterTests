@@ -16,8 +16,7 @@ $Type = 'string[]'
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
 [ScriptBlock]$Actual = {
-    $var = "Name;PortGroupName;VMotionEnabled;FaultToleranceLoggingEnabled;ManagementTrafficEnabled;IPv6Enabled;Mtu;VsanTrafficEnabled;DhcpEnabled"
-    $Var # Returns value
+    ("Name;PortGroupName;VMotionEnabled;FaultToleranceLoggingEnabled;ManagementTrafficEnabled;IPv6Enabled;Mtu;VsanTrafficEnabled;DhcpEnabled")
     $Object | Get-VMHostNetworkAdapter | Where-Object { $_.Name -like "vmk*" } | ForEach-Object {
         # [0] = Name
         # [1] = PortGroupName
@@ -33,10 +32,9 @@ $Type = 'string[]'
         if ($PortGroupName -like "vxw-vmknicPg-dvs*") { 
             $PortGroupName = $PortGroupName.Substring(0,16) 
         }
-        $Var = $_.Name+";"+$PortGroupName+";"+$_.VMotionEnabled+";"+
+        ($_.Name+";"+$PortGroupName+";"+$_.VMotionEnabled+";"+
         $_.FaultToleranceLoggingEnabled+";"+$_.ManagementTrafficEnabled+";"+
-        $_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled
-        $Var    # Returns value
+        $_.IPv6Enabled+";"+$_.Mtu+";"+$_.VsanTrafficEnabled+";"+$_.DhcpEnabled)
     }
 }
 
