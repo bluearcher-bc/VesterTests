@@ -15,8 +15,13 @@ $Type = 'int'
 
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
+#[ScriptBlock]$Actual = {
+#    (Get-AdvancedSetting -Entity $Object -Name event.maxAge).Value
+#}
+
 [ScriptBlock]$Actual = {
-    (Get-AdvancedSetting -Entity $Object -Name event.maxAge).Value
+    if (!$Desired) { (60) }
+    else { (Get-AdvancedSetting -Entity $Object -Name event.maxAge).Value }
 }
 
 # The command(s) to match the environment to the config

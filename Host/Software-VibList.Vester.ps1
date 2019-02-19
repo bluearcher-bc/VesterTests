@@ -16,15 +16,9 @@ $Type = 'string[]'
 
 # The command(s) to pull the actual value for comparison
 # $Object will scope to the folder this test is in (Cluster, Host, etc.)
-#[ScriptBlock]$Actual = {
-#    (Get-EsxCli -VMHost $Object -v2).software.vib.list.invoke() | ForEach-Object {
-#        $var = $_.Name+","+$_.Version
-#        $Var    # Returns value
-#    }
-#}
 [ScriptBlock]$Actual = {
     (Get-EsxCli -VMHost $Object -v2).software.vib.list.invoke() | ForEach-Object {
-        $_.Name+"   "+$_.Version
+        $_.Name+" ; "+$_.Version
     }
 }
 
