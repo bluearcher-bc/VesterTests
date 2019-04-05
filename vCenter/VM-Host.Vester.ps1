@@ -22,7 +22,7 @@ $Type = 'string[]'
 # After running New-VesterConfig, the resulting Config.json can be edited.
 $lines = (
 "VM01;esx01.virtual.local",
-"VM02;esx02.virtual.local"
+"LinkedVM;esx01.virtual.local"
 )
 [ScriptBlock]$Actual = {
     if (!$Desired) {
