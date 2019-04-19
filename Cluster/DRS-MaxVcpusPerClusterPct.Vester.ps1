@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'DRS CPU Over-Commitment - MaxVcpusPerClusterPct'
+$Title = 'DRS CPU Over Commitment'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'CPU over-commitment ratio (% of cluster capacity)'

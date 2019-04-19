@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'VDS Porgroup settings'
+$Title = 'VDS Portgroup settings'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the VDS portgroups'

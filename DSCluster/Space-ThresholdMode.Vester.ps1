@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - Space Threshold Mode'
+$Title = 'SDRS Space Threshold Mode'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the space threshold mode (utilization or freeSpace)'

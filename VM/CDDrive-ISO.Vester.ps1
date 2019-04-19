@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'CD-ROM ISO File'
+$Title = 'CD ROM ISO File'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Optionally disallow VMs from mounting an ISO file via CD-ROM drive'

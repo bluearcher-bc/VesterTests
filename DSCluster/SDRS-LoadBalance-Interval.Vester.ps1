@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - Load Balance Interval'
+$Title = 'SDRS Load Balance Interval'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the interval where SDRS checks for storage imbalances (4 hour default)'

@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - Space Utilization Difference Minimum'
+$Title = 'SDRS Space Utilization Difference Minimum'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the minimum space utilization difference between datastores before storage migrations are recommended (1% - 50%. Default 5%)'

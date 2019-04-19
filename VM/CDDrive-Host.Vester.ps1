@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'CD-ROM Host Device'
+$Title = 'CD ROM Host Device'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Optionally disallow VMs from using the host CD-ROM drive'

@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - IO Load Balanced Reservable Percent Threshold'
+$Title = 'SDRS IO Load Balanced Reservable Percent Threshold'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the IOPS percentage where SDRS will make storage migration recommendations (30% - 100%. Default 60%)'

@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - FreeSpace Threshold GB'
+$Title = 'SDRS FreeSpace Threshold GB'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the freeSpace threshold in GBs. SDRS makes storage recommendations if the free space on one or more of the datastores falls below the specified threshold'

@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - IO Load ImBalanced Threshold'
+$Title = 'SDRS IO Load ImBalanced Threshold'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the I/O load imbalance level where SDRS will make storage migration recommendations (1 - 100. Default 5)'

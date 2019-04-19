@@ -2,7 +2,7 @@
 # Called via Invoke-Pester VesterTemplate.Tests.ps1
 
 # Test title, e.g. 'DNS Servers'
-$Title = 'SDRS - IO Load Balanced Threshold Mode'
+$Title = 'SDRS IO Load Balanced Threshold Mode'
 
 # Test description: How New-VesterConfig explains this value to the user
 $Description = 'Specifies the reservation threshold specification to use (automated or manual)'
